@@ -3,24 +3,37 @@ const router = express.Router();
 
 // Models for
 const Movie = require('../models/Movie');
+// ------START--- List ALL Movies -------
 
-router.post('/', (req, res, next) =>  {
-  const { title , imdb , category , country , year } = req.body;
-  const movie = new Movie({ 
-    title : title,
-    imdb : imdb,
-    category : category,
-    country  : country,
-    year : year
+router.get('/',(req, res, next) => {
+    const promise = Movie.find({ });
+    promise.then((data) => {
+      res.json(data);
+    }).catch((err) => {
+      res.json(err);
+    });
+
+});
+// ------END--- Add a new movie -------
+
+// ------START--- Add a new movie -------
+router.post('/', (req, res, next) => {
+  const { title, imdb, category, country, year } = req.body;
+  const movie = new Movie({
+    title: title,
+    imdb: imdb,
+    category: category,
+    country: country,
+    year: year
 
   });
 
-/*   movie.save((err,data) => {
-    if(err){
-      res.json(err);
-    }
-    res.json(data);
-  }); */
+  /*   movie.save((err,data) => {
+      if(err){
+        res.json(err);
+      }
+      res.json(data);
+    }); */
 
   const promise = movie.save();
 
@@ -29,7 +42,55 @@ router.post('/', (req, res, next) =>  {
   }).catch((err) => {
     res.json(err);
   })
-  
+
 });
+// ------END--- Add a new movie -------
+
+
+// ------START--- One Movie Detail -------
+router.get('/:movie_id', (req, res, next) => {
+  const promise = Movie.findById(req.params.movie_id);
+  promise.then((data) => {
+    if(!data){
+      next( { message : 'The movie was not found' , code : 404 });
+      return; // to ignore error message + res.json data ONLY ERROR MESSAGE
+    }
+    res.json(data);
+  }).catch((err) => {
+    res.json(err);
+  });
+});
+// ------END--- One Movie Detail -------
+
+// ------START--- One Movie Update -------
+router.put('/:movie_id', (req, res, next) => {
+  const promise = Movie.findByIdAndUpdate(req.params.movie_id, req.body , { new : true }); // new means update returned data 
+  promise.then((data) => {
+    if(!data){
+      next( { message : 'The movie was not found' , code : 404 });
+      return; // to ignore error message + res.json data ONLY ERROR MESSAGE
+    }
+    res.json(data);
+  }).catch((err) => {
+    res.json(err);
+  });
+});
+// ------END--- One Movie Update -------
+
+// ------START--- One Movie Delete -------
+router.delete('/:movie_id', (req, res, next) => {
+  const promise = Movie.findByIdAndRemove(req.params.movie_id); 
+  promise.then((data) => {
+    if(!data){
+      next( { message : 'The movie was not found' , code : 404 });
+      return; // to ignore error message + res.json data ONLY ERROR MESSAGE
+    }
+    res.json(data);
+  }).catch((err) => {
+    res.json(err);
+  });
+});
+// ------END--- One Movie Delete -------
+
 
 module.exports = router;
