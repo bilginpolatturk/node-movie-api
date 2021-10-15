@@ -14,7 +14,7 @@ router.get('/',(req, res, next) => {
     });
 
 });
-// ------END--- Add a new movie -------
+// ------END--- List ALL Movies -------
 
 // ------START--- Add a new movie -------
 router.post('/', (req, res, next) => {
@@ -46,6 +46,18 @@ router.post('/', (req, res, next) => {
 });
 // ------END--- Add a new movie -------
 
+// ------START--- Top 10 Movies -------
+
+router.get('/top10',(req, res, next) => {
+  const promise = Movie.find({ }).sort({ imdb : -1}).limit(10);
+  promise.then((data) => {
+    res.json(data);
+  }).catch((err) => {
+    res.json(err);
+  });
+
+});
+// ------END--- Top 10 Movies -------
 
 // ------START--- One Movie Detail -------
 router.get('/:movie_id', (req, res, next) => {
@@ -92,5 +104,23 @@ router.delete('/:movie_id', (req, res, next) => {
 });
 // ------END--- One Movie Delete -------
 
+
+// ------START--- Movies between two dates -------
+router.get('/between/:start_year/:end_year', (req, res, next) => {
+  const { start_year, end_year} = req.params;
+  const promise = Movie.find({ 
+    year : {
+      "$gte" : parseInt(start_year),
+      "$lte" : parseInt(end_year)
+      
+   }}); 
+  promise.then((data) => {
+  
+    res.json(data);
+  }).catch((err) => {
+    res.json(err);
+  });
+});
+// ------END--- Movies between two dates -------
 
 module.exports = router;
