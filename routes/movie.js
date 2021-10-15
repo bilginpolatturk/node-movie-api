@@ -18,13 +18,14 @@ router.get('/',(req, res, next) => {
 
 // ------START--- Add a new movie -------
 router.post('/', (req, res, next) => {
-  const { title, imdb, category, country, year } = req.body;
+  const { title, imdb, category, country, year,director_id } = req.body;
   const movie = new Movie({
     title: title,
     imdb: imdb,
     category: category,
     country: country,
-    year: year
+    year: year,
+    director_id : director_id
 
   });
 
