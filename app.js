@@ -7,6 +7,10 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const movie = require('./routes/movie');
 const director = require('./routes/director');
+// JWT secret key
+const config = require('./config');
+
+
 
 const app = express();
 // DB connection
@@ -14,6 +18,8 @@ const db = require('./helpers/db.js')();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+// jwt key set
+app.set('api_secret_key',config.api_secret_key);
 
 app.use(logger('dev'));
 app.use(express.json());
