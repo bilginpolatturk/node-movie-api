@@ -1,5 +1,5 @@
-# node-movie-api
-Node.JS - Movie API
+# Node Movie API
+## Node.JS - Movie API - JWT Authentication - Mocha&Chai Unit Test
 
 # Movies
 
@@ -25,11 +25,19 @@ Node.JS - Movie API
 | /api/directors/:director_id     | DELETE | Empty | Delete a director. |
 | /api/directors/:director_id/best10movie  | GET | Empty | 	The director's top 10 films. |
 
-# Index
+# Index - JWT Authentication
+### npm install bcryptjs --save (for encrypt and decrypt password)
+### npm install jsonwebtoken --save (for JWT)
 
 | Route        | HTTP Verb           | POST body  | Description |
 | :-------------: |:-------------:| :-----:|:--------:|
 | /register    | POST | { username: 'John', password:'123123' } | Create a new user. |
 | /authenticate    | POST | { username: 'John', password:'123123' } | Generate a token. |
 
+
+# Mocha & Chai Unit Test
+
+### npm install mocha chai chai-http --save ( for install)
+### npm install --global mocha 
+### npx mocha (for run the test) --> updated at package.json now you can run as ( npm test )
 
