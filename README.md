@@ -1,3 +1,5 @@
+![Build Status](https://github.com/bilginpolatturk/node-movie-api/actions/workflows/testing.yml/badge.svg)
+
 # Node Movie API
 ## Node.JS - Movie API - JWT Authentication - Mocha&Chai Unit Test
 
